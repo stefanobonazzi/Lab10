@@ -6,8 +6,9 @@ package it.polito.tdp.rivers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.event.ActionEvent;
 import it.polito.tdp.rivers.model.Model;
+import it.polito.tdp.rivers.model.River;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,7 +26,7 @@ public class FXMLController {
     private URL location;
 
     @FXML // fx:id="boxRiver"
-    private ComboBox<?> boxRiver; // Value injected by FXMLLoader
+    private ComboBox<River> boxRiver; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtStartDate"
     private TextField txtStartDate; // Value injected by FXMLLoader
@@ -48,6 +49,39 @@ public class FXMLController {
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
 
+    @FXML
+    void handleFiume(ActionEvent event) {
+    	River river = boxRiver.getValue();
+    	String s = this.model.gestisciDati(river);
+    	
+    	String array[] = s.split(" ");
+    	txtStartDate.setText(array[0]);
+    	txtEndDate.setText(array[1]);
+    	txtNumMeasurements.setText(array[2]);
+    	txtFMed.setText(array[3]);
+    }
+
+    @FXML
+    void handleSimula(ActionEvent event) {
+    	txtResult.setText("");
+    	String s = txtK.getText();
+    	double k;
+    	try {
+    		k = Double.parseDouble(s);
+    	} catch (NumberFormatException e) {
+			txtResult.setText("Inserire un numero valido");
+			return;
+    	}
+    	
+    	if(k<=0) {
+			txtResult.setText("Inserire un numero valido maggiore di zero");
+			return;
+    	}
+    	
+    	
+    	
+    }
+    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert boxRiver != null : "fx:id=\"boxRiver\" was not injected: check your FXML file 'Scene.fxml'.";
@@ -62,5 +96,6 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	boxRiver.getItems().addAll(this.model.getAllRivers());
     }
 }
