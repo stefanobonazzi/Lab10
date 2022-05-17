@@ -78,8 +78,9 @@ public class FXMLController {
 			return;
     	}
     	
-    	
-    	
+    	this.model.simula(k);
+    	txtResult.setText("Nunmero di giorni in cui non si è potuta garantire l'erogazione minima: "+model.getGgNonGarantiti()+" giorni.\n");
+    	txtResult.appendText("Occupazione media del bacino nel corso della simulazione: "+model.getCmed()+" milioni di litri.");
     }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
