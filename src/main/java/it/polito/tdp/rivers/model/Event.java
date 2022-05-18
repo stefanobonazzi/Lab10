@@ -2,7 +2,7 @@ package it.polito.tdp.rivers.model;
 
 import java.time.LocalDate;
 
-public class Event implements Comparable<Event>{
+public class Event implements Comparable<Event> {
 	
 	public enum EventType {
 		NORMAL,
@@ -14,8 +14,6 @@ public class Event implements Comparable<Event>{
 	private double Fout;
 	private double tracimazione;
 	private LocalDate day;
-	
-	
 
 	public Event(EventType type, double fin, double fout, double tracimazione, LocalDate day) {
 		this.type = type;

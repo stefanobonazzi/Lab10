@@ -41,7 +41,6 @@ public class Simulator {
 			double Fout = this.Fout_min;
 			SplittableRandom random = new SplittableRandom();
 			boolean irrigation = random.nextInt(1, 101) <= 5;
-			
 			if(irrigation) {
 				Fout *= 10;
 			}
@@ -65,8 +64,6 @@ public class Simulator {
 				double aggiunta = (e.getFin()-e.getFout())*86400;
 				if((C+aggiunta) > Q) {
 					this.queue.add(new Event(EventType.TRACIMAZIONE, 0, 0, (C+aggiunta)-Q, e.getDay()));
-					C = Q;
-					Cmed += C;
 				} else {
 					C = C+aggiunta;
 					Cmed += C;
@@ -75,17 +72,19 @@ public class Simulator {
 				if((C-((e.getFout()-e.getFin())*86400)) < (Fout_min*86400)) {
 					ggNonGarantiti++;
 				} 
+				
 				C = C-((e.getFout()-e.getFin())*86400);
+				
 				if(C <= 0)
-					C =0;
+					C = 0;
 				
 				Cmed += C;
 			}
-			
 			break;
 
 		case TRACIMAZIONE:
-			
+			C = Q;
+			Cmed += C;
 			break;
 		}
 	}
